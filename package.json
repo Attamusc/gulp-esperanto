@@ -1,0 +1,35 @@
+{
+  "name": "gulp-esperanto",
+  "version": "0.0.0",
+  "description": "Gulp plugin to transpile ES6 module syntax with esperanto",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Attamusc/gulp-esperanto.git"
+  },
+  "keywords": [
+    "gulp",
+    "plugin",
+    "es6",
+    "module",
+    "esperanto"
+  ],
+  "author": "Sean Dunn <sean@attamusc.com> (http://www.dunns.me/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Attamusc/gulp-esperanto/issues"
+  },
+  "homepage": "https://github.com/Attamusc/gulp-esperanto",
+  "dependencies": {
+    "esperanto": "^0.3.12",
+    "gulp-util": "^3.0.1",
+    "through2": "^0.6.2"
+  },
+  "devDependencies": {
+    "chai": "^1.9.2",
+    "mocha": "^1.21.4"
+  }
+}

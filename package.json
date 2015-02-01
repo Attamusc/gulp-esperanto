@@ -1,6 +1,6 @@
 {
   "name": "gulp-esperanto",
-  "version": "0.0.0",
+  "version": "0.2.0",
   "description": "Gulp plugin to transpile ES6 module syntax with esperanto",
   "main": "index.js",
   "scripts": {

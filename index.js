@@ -1,18 +1,16 @@
 'use strict';
 
-var through = require('through2');
 var gutil = require('gulp-util');
+var through = require('through2');
+var applySourceMap = require('vinyl-sourcemaps-apply');
+var objectAssign = require('object-assign');
 var esperanto = require('esperanto');
 
-var typeMap = {
-  amd: 'toAmd',
-  cjs: 'toCjs'
-};
+module.exports = function(opts) {
+  opts = opts || { type: 'amd' };
 
-function esperantoStream(config) {
-  config = config || { type: 'amd' };
-
-  var conversionFn = typeMap[config.type];
+  var fn = 'to' + opts.type.charAt(0).toUpperCase() + opts.type.slice(1).toLowerCase();
+  // amd => toAmd, cjs => toCjd, umd => toUmd
 
   return through.obj(function(file, enc, cb) {
     if (file.isNull()) {
@@ -25,13 +23,25 @@ function esperantoStream(config) {
       return;
     }
 
-    var convertedContents = esperanto[conversionFn](file.contents.toString(), { defaultOnly: config.defaultOnly });
+    try {
+      var fileOpts = objectAssign({}, opts, {
+        sourceMap: !!file.sourceMap,
+        sourceMapSource: file.relative,
+        sourceMapFile: file.relative
+      });
 
-    file.contents = new Buffer(convertedContents);
-    this.push(file);
+      var res = esperanto[fn](file.contents.toString(), fileOpts);
+
+      if (file.sourceMap && res.map) {
+        applySourceMap(file, res.map);
+      }
+
+      file.contents = new Buffer(res.code);
+      this.push(file);
+    } catch (err) {
+      this.emit('error', new gutil.PluginError('gulp-esperanto', err, {fileName: file.path}));
+    }
 
     cb();
   });
 }
-
-module.exports = esperantoStream;

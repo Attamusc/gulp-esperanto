@@ -6,6 +6,18 @@ var applySourceMap = require('vinyl-sourcemaps-apply');
 var objectAssign = require('object-assign');
 var esperanto = require('esperanto');
 
+/**
+ * sample options for bundle
+  var bundleConfig = {
+    bundle: true,
+    type: 'umd',
+    base: 'src',
+    entry: 'SDK.js',
+    name: 'ModuleName',
+    amdName: 'ModuleName',
+    strict: true
+  }
+ */
 module.exports = function(opts) {
   opts = opts || { type: 'amd' };
 
@@ -20,6 +32,24 @@ module.exports = function(opts) {
 
     if (file.isStream()) {
       cb(new gutil.PluginError('gulp-esperanto', 'Streaming is not currently supported'));
+      return;
+    }
+
+    if (opts.bundle) {
+      var self = this;
+
+      esperanto.bundle(opts).then(function(bundled) {
+        file.contents = new Buffer(bundled[fn](opts).code);
+        self.push(file);
+
+        cb();
+      }).catch(function(err) {
+        console.log(err.stack);
+        self.emit('error', new gutil.PluginError('gulp-esperanto', err, {fileName: file.path}));
+
+        cb();
+      })
+
       return;
     }
 

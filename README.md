@@ -32,7 +32,21 @@ gulp.task('default', function () {
 
 #### config.type
 
-Can be one of 'amd' or 'cjs' (CommonJS) to set the desired format of the output
+Can be one of 'amd', 'cjs' or 'umd' to set the desired format of the output.
+
+Example,
+
+```js
+var gulp = require('gulp');
+var esperanto = require('gulp-esperanto');
+
+gulp.task('default', function () {
+	return gulp.src('src/app.js')
+		.pipe(esperanto({type: 'umd'}))
+		.pipe(gulp.dest('dist'));
+});
+
+```
 
 #### config.defaultOnly
 

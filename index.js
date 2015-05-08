@@ -7,7 +7,7 @@ var objectAssign = require('object-assign');
 var esperanto = require('esperanto');
 
 module.exports = function(opts) {
-  opts = opts || { type: 'amd' };
+  opts = objectAssign({ type: 'amd' }, opts);
 
   var fn = 'to' + opts.type.charAt(0).toUpperCase() + opts.type.slice(1).toLowerCase();
   // amd => toAmd, cjs => toCjd, umd => toUmd
@@ -27,7 +27,8 @@ module.exports = function(opts) {
       var fileOpts = objectAssign({}, opts, {
         sourceMap: !!file.sourceMap,
         sourceMapSource: file.relative,
-        sourceMapFile: file.relative
+        sourceMapFile: file.relative,
+        name: file.relative
       });
 
       var res = esperanto[fn](file.contents.toString(), fileOpts);

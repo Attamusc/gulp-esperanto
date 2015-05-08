@@ -27,7 +27,8 @@ module.exports = function(opts) {
       var fileOpts = objectAssign({}, opts, {
         sourceMap: !!file.sourceMap,
         sourceMapSource: file.relative,
-        sourceMapFile: file.relative
+        sourceMapFile: file.relative,
+        name: file.relative
       });
 
       var res = esperanto[fn](file.contents.toString(), fileOpts);

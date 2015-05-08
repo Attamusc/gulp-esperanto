@@ -7,7 +7,7 @@ var objectAssign = require('object-assign');
 var esperanto = require('esperanto');
 
 module.exports = function(opts) {
-  opts = opts || { type: 'amd' };
+  opts = objectAssign({ type: 'amd' }, opts);
 
   var fn = 'to' + opts.type.charAt(0).toUpperCase() + opts.type.slice(1).toLowerCase();
   // amd => toAmd, cjs => toCjd, umd => toUmd

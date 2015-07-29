@@ -32,7 +32,7 @@ it('should generate source maps', function (cb) {
     .pipe(write);
 
   write.on('data', function (file) {
-    assert.deepEqual(file.sourceMap.sources, ['../../fixture.js']);
+    assert.deepEqual(file.sourceMap.sources, ['fixture.js']);
     var contents = file.contents.toString();
     assert(/function/.test(contents));
     assert(/sourceMappingURL/.test(contents));

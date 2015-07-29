@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/Attamusc/gulp-esperanto",
   "dependencies": {
-    "esperanto": "^0.6.16",
+    "esperanto": "^0.7.3",
     "gulp-util": "^3.0.2",
     "object-assign": "^2.0.0",
     "through2": "^0.6.3",
